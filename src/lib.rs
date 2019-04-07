@@ -44,6 +44,16 @@ pub mod star_shooter_objects {
         esc        
     }
 
+    pub enum screen{
+        start_screen,
+        continue_screen,
+        options_screen,
+        confirm_resolution_screen,
+        highscore_screen,
+        level_screen,
+        pause_screen
+    }
+
 
     pub fn bar()-> u32{
         42
