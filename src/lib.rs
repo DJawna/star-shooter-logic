@@ -14,12 +14,34 @@ pub mod star_shooter_objects {
         heights: Vec<u32>
     }
 
-    pub struct space_objects{
+    /***  game objects contain the positions of the gameobjects ***/
+    pub struct game_objects{
+        id: Vec<u32>,
         x_coordinates: Vec<f32>,
         y_coordinates: Vec<f32>,
         widths: Vec<f32>,
         heights: Vec<f32>,
         texture_ids: Vec<u32>
+    }
+
+    /*** saves the destructables ***/
+    pub struct destructables{
+        game_object_ids: Vec<u32>,
+        hitpoints: Vec<u32>,
+        x_collboxoffsets: Vec<f32>,
+        y_collboxoffsets: Vec<f32>,
+        widthoffsets: Vec<f32>,
+        heightoffsets: Vec<f32>
+    }
+
+    pub enum movement_input{
+        move_up,
+        move_down,
+        move_left,
+        move_right,
+        primary_fire,
+        select,
+        esc        
     }
 
 
