@@ -54,6 +54,10 @@ pub mod star_shooter_objects {
         pause_screen
     }
 
+    pub struct level_state{
+        
+    }
+
 
     pub fn bar()-> u32{
         42
