@@ -25,6 +25,15 @@ pub mod star_shooter_logic {
             heightoffsets: Vec<f32>,
         }
 
+        enum collidable_object_state{
+            inactive,
+            spawning,
+            idle,
+            standard_attack,
+            special_attack,
+            dying
+        }
+
         struct rectangle{
             x: f32,
             y: f32,
@@ -61,15 +70,7 @@ pub mod star_shooter_logic {
             hostile_objects: crate::star_shooter_logic::game_objects::collidable_object_table,
             alied_objects: crate::star_shooter_logic::game_objects::collidable_object_table
         }
-
     }
-
-
-
-
-
-
-
 }
 
 #[cfg(test)]
