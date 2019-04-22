@@ -15,18 +15,21 @@ pub mod star_shooter_logic {
         }
 
         /***  game objects contain the positions of the gameobjects ***/
-        pub struct game_object_table {
+        pub struct collidable_object_table {
             id: Vec<u32>,
-            x_coordinates: Vec<f32>,
-            y_coordinates: Vec<f32>,
-            widths: Vec<f32>,
-            heights: Vec<f32>,
-            x_collboxoffsets: Vec<f32>,
-            y_collboxoffsets: Vec<f32>,
+            visible_boxes: Vec<rectangle>,
+            collision_boxes: Vec<rectangle>,
             texture_ids: Vec<u32>,
             hitpoints: Vec<u32>,
             widthoffsets: Vec<f32>,
             heightoffsets: Vec<f32>,
+        }
+
+        struct rectangle{
+            x: f32,
+            y: f32,
+            width: f32,
+            height: f32
         }
     }
 
@@ -38,28 +41,34 @@ pub mod star_shooter_logic {
             move_right,
             primary_fire,
             select,
-            esc,
+            esc
+        }
+
+        pub enum screen {
+            start_screen,
+            continue_screen,
+            options_screen,
+            confirm_resolution_screen,
+            highscore_screen,
+            level_screen,
+            pause_screen
+        }
+    }
+
+
+    mod state_objects{
+        struct LevelState {
+            hostile_objects: crate::star_shooter_logic::game_objects::collidable_object_table,
+            alied_objects: crate::star_shooter_logic::game_objects::collidable_object_table
         }
 
     }
 
-    pub enum screen {
-        start_screen,
-        continue_screen,
-        options_screen,
-        confirm_resolution_screen,
-        highscore_screen,
-        level_screen,
-        pause_screen,
-    }
 
-    pub struct LevelState {
-        objects: game_objects::game_object_table,
-    }
 
-    pub fn bar() -> u32 {
-        42
-    }
+
+
+
 
 }
 
