@@ -34,7 +34,7 @@ pub mod star_shooter_logic {
             dying
         }
 
-        struct rectangle{
+        pub struct rectangle{
             x: f32,
             y: f32,
             width: f32,
@@ -68,8 +68,15 @@ pub mod star_shooter_logic {
     mod state_objects{
         struct LevelState {
             hostile_objects: crate::star_shooter_logic::game_objects::collidable_object_table,
-            alied_objects: crate::star_shooter_logic::game_objects::collidable_object_table
+            alied_objects: crate::star_shooter_logic::game_objects::collidable_object_table,
+            neutral_objects: crate::star_shooter_logic::game_objects::collidable_object_table
+            
         }
+    }
+
+    fn get_overlapping_rectangles(rect: & crate::star_shooter_logic::game_objects::rectangle, rectangles: &Vec<crate::star_shooter_logic::game_objects::rectangle>) -> Vec<u32>{
+         let mut ret : Vec<u32> = Vec::new();
+         return ret;
     }
 }
 
