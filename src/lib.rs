@@ -23,6 +23,7 @@ pub mod star_shooter_logic {
             hitpoints: Vec<u32>,
             widthoffsets: Vec<f32>,
             heightoffsets: Vec<f32>,
+            collisiondamages: Vec<u32>
         }
 
         enum collidable_object_state{
@@ -74,10 +75,10 @@ pub mod star_shooter_logic {
         }
     }
 
-    fn get_overlapping_rectangles(rect: & crate::star_shooter_logic::game_objects::rectangle, rectangles: &Vec<crate::star_shooter_logic::game_objects::rectangle>) -> Vec<u32>{
-         let mut ret : Vec<u32> = Vec::new();
-         return ret;
+    fn compute_all_collision_damage(rect: &crate::star_shooter_logic::game_objects::rectangle, enemyRectangles: &Vec<crate::star_shooter_logic::game_objects::rectangle>, enemyDamageValues: &Vec<u32>) -> u32 {
+        return 0;
     }
+
 }
 
 #[cfg(test)]
