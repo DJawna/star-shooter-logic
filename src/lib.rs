@@ -39,6 +39,16 @@ pub mod star_shooter_logic {
             pub width: f32,
             pub height: f32
         }
+
+        impl rectangle{
+            pub fn does_overlap(&self, other: &rectangle) -> bool {
+                fn number_within_segment(numberToTest: f32, beginOfSegment: f32, segmentLength: f32) -> bool{
+                    (numberToTest >= beginOfSegment) && (numberToTest <= (beginOfSegment+ segmentLength))
+                }
+                number_within_segment(self.x, other.x,other.width) || number_within_segment(other.x,self.x,self.width)
+            }
+
+        }
     }
 
     mod ui_objects {
@@ -74,13 +84,41 @@ pub mod star_shooter_logic {
     }
 
     pub fn compute_all_collision_damage(rect: &crate::star_shooter_logic::game_objects::rectangle, enemyRectangles: &Vec<crate::star_shooter_logic::game_objects::rectangle>, enemyDamageValues: &Vec<u32>) -> u32 {
-        return 0;
+        let mut damage_aggregate =0;
+        for (index, enemy) in enemyRectangles.iter().enumerate(){
+            if rect.does_overlap(&enemy){
+                damage_aggregate += enemyDamageValues[index];
+            }
+        }
+        return damage_aggregate;
     }
 
 }
 
 #[cfg(test)]
 mod tests {
+
+    #[test]
+    fn rectange_doesOverlap_otherCompletelyEngulfed_true(){
+        let engulfingRectangle = crate::star_shooter_logic::game_objects::rectangle{
+                    x: 11.,
+                    y: 13.,
+                    width: 20.,
+                    height: 20.
+        };
+
+        let engulfedRectangle = crate::star_shooter_logic::game_objects::rectangle{
+                    x: 12.,
+                    y: 14.,
+                    width: 1.0,
+                    height: 1.0
+        };
+
+        assert!(engulfingRectangle.does_overlap(&engulfedRectangle));
+
+        assert!(engulfedRectangle.does_overlap(&engulfingRectangle));
+    }
+
     #[test]
     fn compute_all_collision_damage_test() {
         let enemies = crate::star_shooter_logic::game_objects::collidable_object_table{
