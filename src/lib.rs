@@ -42,10 +42,12 @@ pub mod star_shooter_logic {
 
         impl rectangle{
             pub fn does_overlap(&self, other: &rectangle) -> bool {
-                fn number_within_segment(numberToTest: f32, beginOfSegment: f32, segmentLength: f32) -> bool{
-                    (numberToTest >= beginOfSegment) && (numberToTest <= (beginOfSegment+ segmentLength))
+                fn number_within_segment(number_to_test: f32, beginn_of_segment: f32, segment_lenght: f32) -> bool{
+                    (number_to_test >= beginn_of_segment) && (number_to_test <= (beginn_of_segment+ segment_lenght))
                 }
-                number_within_segment(self.x, other.x,other.width) || number_within_segment(other.x,self.x,self.width)
+                (number_within_segment(self.x, other.x,other.width) || number_within_segment(other.x,self.x,self.width))
+                &&
+                (number_within_segment(self.y, other.y,other.height) || number_within_segment(other.y,self.y,self.height))
             }
 
         }
@@ -117,6 +119,51 @@ mod tests {
         assert!(engulfingRectangle.does_overlap(&engulfedRectangle));
 
         assert!(engulfedRectangle.does_overlap(&engulfingRectangle));
+    }
+
+    #[test]
+    fn rectangle_onlyoverlapson_x_but_not_y_false(){
+        let rectOne = crate::star_shooter_logic::game_objects::rectangle{
+                    x: 11.,
+                    y: 13.,
+                    width: 20.,
+                    height: 20.
+        };
+
+        let rectTwo = crate::star_shooter_logic::game_objects::rectangle{
+                    x: 12.,
+                    y: 666.,
+                    width: 1.0,
+                    height: 1.0
+        };
+
+        assert!(!rectOne.does_overlap(&rectTwo));
+
+        assert!(!rectTwo.does_overlap(&rectOne));
+
+    }
+
+
+    #[test]
+    fn rectangle_onlyoverlapson_y_but_not_x_false(){
+        let rectOne = crate::star_shooter_logic::game_objects::rectangle{
+                    x: 11.,
+                    y: 13.,
+                    width: 20.,
+                    height: 20.
+        };
+
+        let rectTwo = crate::star_shooter_logic::game_objects::rectangle{
+                    x: 666.,
+                    y: 14.,
+                    width: 1.0,
+                    height: 1.0
+        };
+
+        assert!(!rectOne.does_overlap(&rectTwo));
+
+        assert!(!rectTwo.does_overlap(&rectOne));
+
     }
 
     #[test]
