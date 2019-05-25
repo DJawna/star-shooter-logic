@@ -51,6 +51,72 @@ pub mod star_shooter_logic {
             }
 
         }
+
+        #[test]
+        fn rectange_doesOverlap_otherCompletelyEngulfed_true(){
+            let engulfingRectangle = crate::star_shooter_logic::game_objects::rectangle{
+                        x: 11.,
+                        y: 13.,
+                        width: 20.,
+                        height: 20.
+            };
+
+            let engulfedRectangle = crate::star_shooter_logic::game_objects::rectangle{
+                        x: 12.,
+                        y: 14.,
+                        width: 1.0,
+                        height: 1.0
+            };
+
+            assert!(engulfingRectangle.does_overlap(&engulfedRectangle));
+
+            assert!(engulfedRectangle.does_overlap(&engulfingRectangle));
+        }
+
+        #[test]
+        fn rectangle_onlyoverlapson_y_but_not_x_false(){
+            let rectOne = crate::star_shooter_logic::game_objects::rectangle{
+                        x: 11.,
+                        y: 13.,
+                        width: 20.,
+                        height: 20.
+            };
+
+            let rectTwo = crate::star_shooter_logic::game_objects::rectangle{
+                        x: 666.,
+                        y: 14.,
+                        width: 1.0,
+                        height: 1.0
+            };
+
+            assert!(!rectOne.does_overlap(&rectTwo));
+
+            assert!(!rectTwo.does_overlap(&rectOne));
+
+        }
+
+        // cont here: 
+        #[test]
+        fn rectangle_onlyoverlapson_x_but_not_y_false(){
+            let rectOne = crate::star_shooter_logic::game_objects::rectangle{
+                        x: 11.,
+                        y: 13.,
+                        width: 20.,
+                        height: 20.
+            };
+
+            let rectTwo = crate::star_shooter_logic::game_objects::rectangle{
+                        x: 12.,
+                        y: 666.,
+                        width: 1.0,
+                        height: 1.0
+            };
+
+            assert!(!rectOne.does_overlap(&rectTwo));
+
+            assert!(!rectTwo.does_overlap(&rectOne));
+
+        }
     }
 
     mod ui_objects {
@@ -93,77 +159,6 @@ pub mod star_shooter_logic {
             }
         }
         return damage_aggregate;
-    }
-
-}
-
-#[cfg(test)]
-mod tests {
-
-    #[test]
-    fn rectange_doesOverlap_otherCompletelyEngulfed_true(){
-        let engulfingRectangle = crate::star_shooter_logic::game_objects::rectangle{
-                    x: 11.,
-                    y: 13.,
-                    width: 20.,
-                    height: 20.
-        };
-
-        let engulfedRectangle = crate::star_shooter_logic::game_objects::rectangle{
-                    x: 12.,
-                    y: 14.,
-                    width: 1.0,
-                    height: 1.0
-        };
-
-        assert!(engulfingRectangle.does_overlap(&engulfedRectangle));
-
-        assert!(engulfedRectangle.does_overlap(&engulfingRectangle));
-    }
-
-    #[test]
-    fn rectangle_onlyoverlapson_x_but_not_y_false(){
-        let rectOne = crate::star_shooter_logic::game_objects::rectangle{
-                    x: 11.,
-                    y: 13.,
-                    width: 20.,
-                    height: 20.
-        };
-
-        let rectTwo = crate::star_shooter_logic::game_objects::rectangle{
-                    x: 12.,
-                    y: 666.,
-                    width: 1.0,
-                    height: 1.0
-        };
-
-        assert!(!rectOne.does_overlap(&rectTwo));
-
-        assert!(!rectTwo.does_overlap(&rectOne));
-
-    }
-
-
-    #[test]
-    fn rectangle_onlyoverlapson_y_but_not_x_false(){
-        let rectOne = crate::star_shooter_logic::game_objects::rectangle{
-                    x: 11.,
-                    y: 13.,
-                    width: 20.,
-                    height: 20.
-        };
-
-        let rectTwo = crate::star_shooter_logic::game_objects::rectangle{
-                    x: 666.,
-                    y: 14.,
-                    width: 1.0,
-                    height: 1.0
-        };
-
-        assert!(!rectOne.does_overlap(&rectTwo));
-
-        assert!(!rectTwo.does_overlap(&rectOne));
-
     }
 
     #[test]
