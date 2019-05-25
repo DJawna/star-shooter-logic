@@ -168,7 +168,7 @@ mod tests {
 
     #[test]
     fn compute_all_collision_damage_test() {
-        let enemies = crate::star_shooter_logic::game_objects::collidable_object_table{
+        let projectiles = crate::star_shooter_logic::game_objects::collidable_object_table{
             id : vec!(1,2),
             visible_boxes: vec!(
                 crate::star_shooter_logic::game_objects::rectangle{
@@ -203,7 +203,7 @@ mod tests {
             collisiondamages: vec!(5,0)
         };
 
-        let mut hero = crate::star_shooter_logic::game_objects::rectangle{
+        let mut damage_receiver = crate::star_shooter_logic::game_objects::rectangle{
             x: 0.,
             y: 0.,
             width: 5.,
@@ -211,16 +211,16 @@ mod tests {
         };
 
         {
-            let actualResult = crate::star_shooter_logic::compute_all_collision_damage(&hero,&enemies.collision_boxes,&enemies.collisiondamages);
+            let actualResult = crate::star_shooter_logic::compute_all_collision_damage(&damage_receiver,&projectiles.collision_boxes,&projectiles.collisiondamages);
 
             assert_eq!(actualResult, 5);
         }
 
-        hero.x = 100.;
-        hero.y = 100.;
+        damage_receiver.x = 100.;
+        damage_receiver.y = 100.;
 
         {
-            let actualResult = crate::star_shooter_logic::compute_all_collision_damage(&hero,&enemies.collision_boxes,&enemies.collisiondamages);
+            let actualResult = crate::star_shooter_logic::compute_all_collision_damage(&damage_receiver,&projectiles.collision_boxes,&projectiles.collisiondamages);
 
             assert_eq!(actualResult, 0);
 
