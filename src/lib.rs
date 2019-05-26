@@ -41,7 +41,7 @@ pub mod star_shooter_logic {
         }
 
         impl rectangle{
-            pub fn does_overlap(&self, other: &rectangle) -> bool {
+            fn does_overlap(&self, other: &rectangle) -> bool {
                 fn number_within_segment(number_to_test: f32, beginn_of_segment: f32, segment_lenght: f32) -> bool{
                     (number_to_test >= beginn_of_segment) && (number_to_test <= (beginn_of_segment+ segment_lenght))
                 }
@@ -50,6 +50,16 @@ pub mod star_shooter_logic {
                 (number_within_segment(self.y, other.y,other.height) || number_within_segment(other.y,self.y,self.height))
             }
 
+        }
+
+        pub fn compute_all_collision_damage(rect: &crate::star_shooter_logic::game_objects::rectangle, enemyRectangles: &Vec<crate::star_shooter_logic::game_objects::rectangle>, enemyDamageValues: &Vec<u32>) -> u32 {
+            let mut damage_aggregate =0;
+            for (index, enemy) in enemyRectangles.iter().enumerate(){
+                if rect.does_overlap(&enemy){
+                    damage_aggregate += enemyDamageValues[index];
+                }
+            }
+            return damage_aggregate;
         }
 
         #[test]
@@ -117,6 +127,9 @@ pub mod star_shooter_logic {
             assert!(!rectTwo.does_overlap(&rectOne));
 
         }
+
+
+
     }
 
     mod ui_objects {
@@ -151,15 +164,7 @@ pub mod star_shooter_logic {
         }
     }
 
-    pub fn compute_all_collision_damage(rect: &crate::star_shooter_logic::game_objects::rectangle, enemyRectangles: &Vec<crate::star_shooter_logic::game_objects::rectangle>, enemyDamageValues: &Vec<u32>) -> u32 {
-        let mut damage_aggregate =0;
-        for (index, enemy) in enemyRectangles.iter().enumerate(){
-            if rect.does_overlap(&enemy){
-                damage_aggregate += enemyDamageValues[index];
-            }
-        }
-        return damage_aggregate;
-    }
+
 
     #[test]
     fn compute_all_collision_damage_test() {
@@ -206,7 +211,7 @@ pub mod star_shooter_logic {
         };
 
         {
-            let actualResult = crate::star_shooter_logic::compute_all_collision_damage(&damage_receiver,&projectiles.collision_boxes,&projectiles.collisiondamages);
+            let actualResult = crate::star_shooter_logic::game_objects::compute_all_collision_damage(&damage_receiver,&projectiles.collision_boxes,&projectiles.collisiondamages);
 
             assert_eq!(actualResult, 5);
         }
@@ -215,10 +220,9 @@ pub mod star_shooter_logic {
         damage_receiver.y = 100.;
 
         {
-            let actualResult = crate::star_shooter_logic::compute_all_collision_damage(&damage_receiver,&projectiles.collision_boxes,&projectiles.collisiondamages);
+            let actualResult = crate::star_shooter_logic::game_objects::compute_all_collision_damage(&damage_receiver,&projectiles.collision_boxes,&projectiles.collisiondamages);
 
             assert_eq!(actualResult, 0);
-
         }
     }
 
