@@ -1,11 +1,11 @@
 pub mod star_shooter_logic {
     pub mod game_objects {
-        pub struct imagefiletable {
+        pub struct ImageFileTable {
             id: Vec<u32>,
             paths: Vec<String>,
         }
 
-        pub struct texturetable {
+        pub struct TextureTable {
             id: Vec<u32>,
             imageids: Vec<u32>,
             xcoordinates: Vec<u32>,
@@ -15,7 +15,7 @@ pub mod star_shooter_logic {
         }
 
         /***  game objects contain the positions of the gameobjects ***/
-        pub struct collidable_object_table {
+        pub struct CollidableObjectTable {
             pub id: Vec<u32>,
             pub visible_boxes: Vec<rectangle>,
             pub collision_boxes: Vec<rectangle>,
@@ -24,7 +24,7 @@ pub mod star_shooter_logic {
             pub collisiondamages: Vec<u32>
         }
 
-        enum collidable_object_state{
+        enum CollidableObjectState{
             inactive,
             spawning,
             idle,
@@ -154,17 +154,19 @@ pub mod star_shooter_logic {
 
 
     mod state_objects{
-        struct LevelState {
-            hostile_objects: crate::star_shooter_logic::game_objects::collidable_object_table,
-            alied_objects: crate::star_shooter_logic::game_objects::collidable_object_table,
-            neutral_objects: crate::star_shooter_logic::game_objects::collidable_object_table
+        use crate::star_shooter_logic::game_objects::CollidableObjectTable;
+
+    struct LevelState {
+            hostile_objects: CollidableObjectTable,
+            alied_objects: CollidableObjectTable,
+            neutral_objects: CollidableObjectTable
             
         }
     }
 
     #[test]
     fn compute_all_collision_damage_test() {
-        let projectiles = crate::star_shooter_logic::game_objects::collidable_object_table{
+        let projectiles = crate::star_shooter_logic::game_objects::CollidableObjectTable{
             id : vec!(1,2),
             visible_boxes: vec!(
                 crate::star_shooter_logic::game_objects::rectangle{
