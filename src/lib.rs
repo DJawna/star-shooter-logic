@@ -128,8 +128,6 @@ pub mod star_shooter_logic {
 
         }
 
-
-
     }
 
     mod ui_objects {
@@ -163,8 +161,6 @@ pub mod star_shooter_logic {
             
         }
     }
-
-
 
     #[test]
     fn compute_all_collision_damage_test() {
@@ -225,5 +221,4 @@ pub mod star_shooter_logic {
             assert_eq!(actualResult, 0);
         }
     }
-
 }
