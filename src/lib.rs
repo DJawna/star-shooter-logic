@@ -1,47 +1,24 @@
 pub mod star_shooter_logic {
     pub mod game_objects {
-        pub struct ImageFileTable {
-            id: Vec<u32>,
-            paths: Vec<String>,
-        }
-
-        pub struct TextureTable {
-            id: Vec<u32>,
-            imageids: Vec<u32>,
-            xcoordinates: Vec<u32>,
-            ycoordinates: Vec<u32>,
-            widths: Vec<u32>,
-            heights: Vec<u32>,
-        }
-
-        /***  game objects contain the positions of the gameobjects ***/
-        pub struct CollidableObjectTable {
-            pub id: Vec<u32>,
-            pub visible_boxes: Vec<rectangle>,
-            pub collision_boxes: Vec<rectangle>,
-            pub texture_ids: Vec<u32>,
-            pub hitpoints: Vec<u32>,
-            pub collisiondamages: Vec<u32>
-        }
 
         enum CollidableObjectState{
-            inactive,
-            spawning,
-            idle,
-            standard_attack,
-            special_attack,
-            dying
+            Inactive,
+            Spawning,
+            Idle,
+            StandardAttack,
+            SpecialAttack,
+            Dying
         }
 
-        pub struct rectangle{
+        pub struct Rectangle{
             pub x: f32,
             pub y: f32,
             pub width: f32,
             pub height: f32
         }
 
-        impl rectangle{
-            fn does_overlap(&self, other: &rectangle) -> bool {
+        impl Rectangle{
+            fn does_overlap(&self, other: &Rectangle) -> bool {
                 fn number_within_segment(number_to_test: f32, beginn_of_segment: f32, segment_lenght: f32) -> bool{
                     (number_to_test >= beginn_of_segment) && (number_to_test <= (beginn_of_segment+ segment_lenght))
                 }
@@ -52,86 +29,86 @@ pub mod star_shooter_logic {
 
         }
 
-        pub fn compute_all_collision_damage(rect: &crate::star_shooter_logic::game_objects::rectangle, enemyRectangles: &Vec<crate::star_shooter_logic::game_objects::rectangle>, enemyDamageValues: &Vec<u32>) -> u32 {
+        pub fn compute_all_collision_damage(rect: &crate::star_shooter_logic::game_objects::Rectangle, enemy_rectangles: &Vec<crate::star_shooter_logic::game_objects::Rectangle>, enemy_damage_values: &Vec<u32>) -> u32 {
             let mut damage_aggregate =0;
-            for (index, enemy) in enemyRectangles.iter().enumerate(){
+            for (index, enemy) in enemy_rectangles.iter().enumerate(){
                 if rect.does_overlap(&enemy){
-                    damage_aggregate += enemyDamageValues[index];
+                    damage_aggregate += enemy_damage_values[index];
                 }
             }
             return damage_aggregate;
         }
 
         #[test]
-        fn rectange_doesOverlap_otherCompletelyEngulfed_true(){
-            let engulfingRectangle = crate::star_shooter_logic::game_objects::rectangle{
+        fn rectange_does_overlap_other_completely_engulfed_true(){
+            let engulfing_rectangle = crate::star_shooter_logic::game_objects::Rectangle{
                         x: 11.,
                         y: 13.,
                         width: 20.,
                         height: 20.
             };
 
-            let engulfedRectangle = crate::star_shooter_logic::game_objects::rectangle{
+            let engulfed_rectangle = crate::star_shooter_logic::game_objects::Rectangle{
                         x: 12.,
                         y: 14.,
                         width: 1.0,
                         height: 1.0
             };
 
-            assert!(engulfingRectangle.does_overlap(&engulfedRectangle));
+            assert!(engulfing_rectangle.does_overlap(&engulfed_rectangle));
 
-            assert!(engulfedRectangle.does_overlap(&engulfingRectangle));
+            assert!(engulfed_rectangle.does_overlap(&engulfing_rectangle));
         }
 
         #[test]
         fn rectangle_onlyoverlapson_y_but_not_x_false(){
-            let rectOne = crate::star_shooter_logic::game_objects::rectangle{
+            let rect_one = crate::star_shooter_logic::game_objects::Rectangle{
                         x: 11.,
                         y: 13.,
                         width: 20.,
                         height: 20.
             };
 
-            let rectTwo = crate::star_shooter_logic::game_objects::rectangle{
+            let rect_two = crate::star_shooter_logic::game_objects::Rectangle{
                         x: 666.,
                         y: 14.,
                         width: 1.0,
                         height: 1.0
             };
 
-            assert!(!rectOne.does_overlap(&rectTwo));
+            assert!(!rect_one.does_overlap(&rect_two));
 
-            assert!(!rectTwo.does_overlap(&rectOne));
+            assert!(!rect_two.does_overlap(&rect_one));
 
         }
 
         // cont here: 
         #[test]
         fn rectangle_onlyoverlapson_x_but_not_y_false(){
-            let rectOne = crate::star_shooter_logic::game_objects::rectangle{
+            let rect_one = crate::star_shooter_logic::game_objects::Rectangle{
                         x: 11.,
                         y: 13.,
                         width: 20.,
                         height: 20.
             };
 
-            let rectTwo = crate::star_shooter_logic::game_objects::rectangle{
+            let rect_two = crate::star_shooter_logic::game_objects::Rectangle{
                         x: 12.,
                         y: 666.,
                         width: 1.0,
                         height: 1.0
             };
 
-            assert!(!rectOne.does_overlap(&rectTwo));
+            assert!(!rect_one.does_overlap(&rect_two));
 
-            assert!(!rectTwo.does_overlap(&rectOne));
+            assert!(!rect_two.does_overlap(&rect_one));
 
         }
 
     }
 
     mod ui_objects {
-        pub enum movement_input {
+        pub enum MovementInput {
             move_up,
             move_down,
             move_left,
@@ -141,7 +118,7 @@ pub mod star_shooter_logic {
             esc
         }
 
-        pub enum screen {
+        pub enum Screen {
             start_screen,
             continue_screen,
             options_screen,
@@ -153,74 +130,5 @@ pub mod star_shooter_logic {
     }
 
 
-    mod state_objects{
-        use crate::star_shooter_logic::game_objects::CollidableObjectTable;
 
-    struct LevelState {
-            hostile_objects: CollidableObjectTable,
-            alied_objects: CollidableObjectTable,
-            neutral_objects: CollidableObjectTable
-            
-        }
-    }
-
-    #[test]
-    fn compute_all_collision_damage_test() {
-        let projectiles = crate::star_shooter_logic::game_objects::CollidableObjectTable{
-            id : vec!(1,2),
-            visible_boxes: vec!(
-                crate::star_shooter_logic::game_objects::rectangle{
-                    x: 0.,
-                    y: 0.,
-                    width: 20.,
-                    height: 20.
-                },
-                crate::star_shooter_logic::game_objects::rectangle{
-                    x: 100.,
-                    y: 100.,
-                    width: 20.,
-                    height: 20.
-                }
-            ),
-            collision_boxes: vec!(
-                crate::star_shooter_logic::game_objects::rectangle{
-                    x: 0.,
-                    y: 0.,
-                    width: 20.,
-                    height: 20.
-                },
-                crate::star_shooter_logic::game_objects::rectangle{
-                    x: 100.,
-                    y: 100.,
-                    width: 20.,
-                    height: 20.
-                }
-            ),
-            texture_ids: vec!(0,0),
-            hitpoints: vec!(20,20),
-            collisiondamages: vec!(5,0)
-        };
-
-        let mut damage_receiver = crate::star_shooter_logic::game_objects::rectangle{
-            x: 0.,
-            y: 0.,
-            width: 5.,
-            height: 5.
-        };
-
-        {
-            let actualResult = crate::star_shooter_logic::game_objects::compute_all_collision_damage(&damage_receiver,&projectiles.collision_boxes,&projectiles.collisiondamages);
-
-            assert_eq!(actualResult, 5);
-        }
-
-        damage_receiver.x = 100.;
-        damage_receiver.y = 100.;
-
-        {
-            let actualResult = crate::star_shooter_logic::game_objects::compute_all_collision_damage(&damage_receiver,&projectiles.collision_boxes,&projectiles.collisiondamages);
-
-            assert_eq!(actualResult, 0);
-        }
-    }
 }
