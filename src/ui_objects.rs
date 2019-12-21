@@ -5,7 +5,13 @@ pub enum MovementInput {
     move_right,
     primary_fire,
     select,
-    esc
+    esc,
+    none
+}
+
+pub struct MousePosition {
+    x: i32,
+    y: i32
 }
 
 pub enum Screen {
@@ -16,4 +22,13 @@ pub enum Screen {
     highscore_screen,
     level_screen,
     pause_screen
+}
+
+pub struct Button {
+    
+}
+
+
+pub struct Scene{
+
 }

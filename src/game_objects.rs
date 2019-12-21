@@ -7,9 +7,13 @@ enum CollidableObjectState{
     Dying
 }
 
+pub struct Point<T> {
+    pub x: T,
+    pub y: T
+}
+
 pub struct Rectangle{
-    pub x: f32,
-    pub y: f32,
+    pub position : Point<f32>,
     pub width: f32,
     pub height: f32
 }
@@ -19,9 +23,9 @@ impl Rectangle{
         fn number_within_segment(number_to_test: f32, beginn_of_segment: f32, segment_lenght: f32) -> bool{
             (number_to_test >= beginn_of_segment) && (number_to_test <= (beginn_of_segment+ segment_lenght))
         }
-        (number_within_segment(self.x, other.x,other.width) || number_within_segment(other.x,self.x,self.width))
+        (number_within_segment(self.position.x, other.position.x,other.width) || number_within_segment(other.position.x,self.position.x,self.width))
         &&
-        (number_within_segment(self.y, other.y,other.height) || number_within_segment(other.y,self.y,self.height))
+        (number_within_segment(self.position.y, other.position.y,other.height) || number_within_segment(other.position.y,self.position.y,self.height))
     }
 
 }
@@ -39,15 +43,19 @@ pub fn compute_all_collision_damage(rect: Rectangle, enemy_rectangles: &Vec<Rect
 #[test]
 fn rectange_does_overlap_other_completely_engulfed_true(){
     let engulfing_rectangle = Rectangle{
-                x: 11.,
-                y: 13.,
+                position: Point{
+                    x: 11.,
+                    y: 13.
+                },
                 width: 20.,
                 height: 20.
     };
 
     let engulfed_rectangle = Rectangle{
-                x: 12.,
-                y: 14.,
+                position: Point{
+                    x: 12.,
+                    y: 14.
+                },
                 width: 1.0,
                 height: 1.0
     };
@@ -60,15 +68,19 @@ fn rectange_does_overlap_other_completely_engulfed_true(){
 #[test]
 fn rectangle_onlyoverlapson_y_but_not_x_false(){
     let rect_one = Rectangle{
-                x: 11.,
-                y: 13.,
+                position: Point{
+                    x: 11.,
+                    y: 13.
+                },
                 width: 20.,
                 height: 20.
     };
 
     let rect_two = Rectangle{
-                x: 666.,
-                y: 14.,
+                position: Point {
+                    x: 666.,
+                    y: 14.
+                },
                 width: 1.0,
                 height: 1.0
     };
@@ -83,15 +95,19 @@ fn rectangle_onlyoverlapson_y_but_not_x_false(){
 #[test]
 fn rectangle_onlyoverlapson_x_but_not_y_false(){
     let rect_one = Rectangle{
-                x: 11.,
-                y: 13.,
+                position: Point{
+                    x: 11.,
+                    y: 13.
+                },
                 width: 20.,
                 height: 20.
     };
 
     let rect_two = Rectangle{
-                x: 12.,
-                y: 666.,
+                position: Point{
+                    x: 12.,
+                    y: 666.
+                },
                 width: 1.0,
                 height: 1.0
     };
