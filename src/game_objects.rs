@@ -18,11 +18,10 @@ pub struct Rectangle{
     pub height: f32
 }
 
-fn number_within_segment(number_to_test: f32, beginn_of_segment: f32, segment_lenght: f32) -> bool{
-    (number_to_test >= beginn_of_segment) && (number_to_test <= (beginn_of_segment + segment_lenght))
-}
-
-pub fn does_overlap(rect1: &Rectangle, rect2: &Rectangle) -> bool {
+fn does_overlap(rect1: &Rectangle, rect2: &Rectangle) -> bool {
+    fn number_within_segment(number_to_test: f32, beginn_of_segment: f32, segment_lenght: f32) -> bool{
+        (number_to_test >= beginn_of_segment) && (number_to_test <= (beginn_of_segment + segment_lenght))
+    }
     (number_within_segment(rect1.position.x, rect2.position.x,rect2.width) || number_within_segment(rect2.position.x,rect1.position.x,rect1.width))
     &&
     (number_within_segment(rect1.position.y, rect2.position.y,rect2.height) || number_within_segment(rect2.position.y,rect1.position.y,rect1.height))
