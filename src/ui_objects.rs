@@ -9,10 +9,6 @@ pub enum MovementInput {
     none
 }
 
-pub struct MousePosition {
-    x: i32,
-    y: i32
-}
 
 pub enum Screen {
     start_screen,
@@ -23,9 +19,14 @@ pub enum Screen {
     level_screen,
     pause_screen
 }
-
 pub struct Button {
-    
+    pub boundaries: crate::game_objects::Rectangle,
+    pub label: String
+}
+
+pub struct Menu {
+    pub selectedButton: Option<Button>,
+    pub buttons : Vec<Button>
 }
 
 

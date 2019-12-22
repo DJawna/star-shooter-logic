@@ -7,33 +7,31 @@ enum CollidableObjectState{
     Dying
 }
 
-pub struct Point<T> {
-    pub x: T,
-    pub y: T
+pub struct Point {
+    pub x: f32,
+    pub y: f32
 }
 
 pub struct Rectangle{
-    pub position : Point<f32>,
+    pub position : Point,
     pub width: f32,
     pub height: f32
 }
 
-impl Rectangle{
-    fn does_overlap(&self, other: &Rectangle) -> bool {
-        fn number_within_segment(number_to_test: f32, beginn_of_segment: f32, segment_lenght: f32) -> bool{
-            (number_to_test >= beginn_of_segment) && (number_to_test <= (beginn_of_segment+ segment_lenght))
-        }
-        (number_within_segment(self.position.x, other.position.x,other.width) || number_within_segment(other.position.x,self.position.x,self.width))
-        &&
-        (number_within_segment(self.position.y, other.position.y,other.height) || number_within_segment(other.position.y,self.position.y,self.height))
-    }
+fn number_within_segment(number_to_test: f32, beginn_of_segment: f32, segment_lenght: f32) -> bool{
+    (number_to_test >= beginn_of_segment) && (number_to_test <= (beginn_of_segment + segment_lenght))
+}
 
+pub fn does_overlap(rect1: &Rectangle, rect2: &Rectangle) -> bool {
+    (number_within_segment(rect1.position.x, rect2.position.x,rect2.width) || number_within_segment(rect2.position.x,rect1.position.x,rect1.width))
+    &&
+    (number_within_segment(rect1.position.y, rect2.position.y,rect2.height) || number_within_segment(rect2.position.y,rect1.position.y,rect1.height))
 }
 
 pub fn compute_all_collision_damage(rect: Rectangle, enemy_rectangles: &Vec<Rectangle>, enemy_damage_values: &Vec<u32>) -> u32 {
     let mut damage_aggregate =0;
     for (index, enemy) in enemy_rectangles.iter().enumerate(){
-        if rect.does_overlap(&enemy){
+        if does_overlap(&rect,&enemy){
             damage_aggregate += enemy_damage_values[index];
         }
     }
@@ -60,9 +58,9 @@ fn rectange_does_overlap_other_completely_engulfed_true(){
                 height: 1.0
     };
 
-    assert!(engulfing_rectangle.does_overlap(&engulfed_rectangle));
+    assert!(does_overlap(&engulfing_rectangle, &engulfed_rectangle));
 
-    assert!(engulfed_rectangle.does_overlap(&engulfing_rectangle));
+    assert!(does_overlap(&engulfed_rectangle, &engulfing_rectangle));
 }
 
 #[test]
@@ -85,9 +83,9 @@ fn rectangle_onlyoverlapson_y_but_not_x_false(){
                 height: 1.0
     };
 
-    assert!(!rect_one.does_overlap(&rect_two));
+    assert!(!does_overlap(&rect_one ,&rect_two));
 
-    assert!(!rect_two.does_overlap(&rect_one));
+    assert!(!does_overlap(&rect_two ,&rect_one));
 
 }
 
@@ -112,8 +110,8 @@ fn rectangle_onlyoverlapson_x_but_not_y_false(){
                 height: 1.0
     };
 
-    assert!(!rect_one.does_overlap(&rect_two));
+    assert!(!does_overlap(&rect_one, &rect_two));
 
-    assert!(!rect_two.does_overlap(&rect_one));
+    assert!(!does_overlap(&rect_two, &rect_one));
 
 }
