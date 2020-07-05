@@ -27,16 +27,6 @@ fn does_overlap(rect1: &Rectangle, rect2: &Rectangle) -> bool {
     (number_within_segment(rect1.position.y, rect2.position.y,rect2.height) || number_within_segment(rect2.position.y,rect1.position.y,rect1.height))
 }
 
-pub fn compute_all_collision_damage(rect: Rectangle, enemy_rectangles: &Vec<Rectangle>, enemy_damage_values: &Vec<u32>) -> u32 {
-    let mut damage_aggregate =0;
-    for (index, enemy) in enemy_rectangles.iter().enumerate(){
-        if does_overlap(&rect,&enemy){
-            damage_aggregate += enemy_damage_values[index];
-        }
-    }
-    return damage_aggregate;
-}
-
 #[test]
 fn rectange_does_overlap_other_completely_engulfed_true(){
     let engulfing_rectangle = Rectangle{
