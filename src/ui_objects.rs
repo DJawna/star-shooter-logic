@@ -1,13 +1,4 @@
-pub enum MovementInput {
-    move_up,
-    move_down,
-    move_left,
-    move_right,
-    primary_fire,
-    select,
-    esc,
-    none
-}
+
 
 
 pub enum Screen {
