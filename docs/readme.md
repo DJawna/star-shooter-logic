@@ -52,6 +52,10 @@
         - [Level Two Venus](#level-two-venus)
         - [Level Three Mercury](#level-three-mercury)
   - [Tech spec](#tech-spec)
+    - [Data Analysis](#data-analysis)
+      - [Global Data](#global-data)
+      - [Start screen](#start-screen-1)
+      - [options screen](#options-screen-1)
     - [Main Game Loop](#main-game-loop)
   - [Issues](#issues)
     - [nvidia open source driver crash](#nvidia-open-source-driver-crash)
@@ -223,6 +227,76 @@ After defeating the alien invasion in earths orbit we are fighting the alien bas
 
 ## Tech spec
 This chapter is all about the architecture of the app.
+
+### Data Analysis
+
+#### Global Data
+
+*selected ui Elements*
+|screenID (unique)|ui ElementID|default|
+|---|---|---|
+|1|2|2| 
+
+Example: screen ID 1 = Start Screen, ui ElementID 2 = Start New Campaign, only one ui element can be selected per Screen
+
+*audiosettings*
+|settingname|value|defaultValue|
+|---|---|---|
+|masterV %|u8|100|
+|SFXV %|u8|100|
+|musicV %|u8|100|
+
+
+*resolution settings*
+|dimension|value|defaultValue|
+|---|---|---|
+|resX|u16|800|
+|resY|u16|600|
+
+*controls*
+|inputname|value|defaultValue|
+|---|---|---|
+|up |u8|upkey|
+|left |u8|leftkey|
+|right |u8|rightkey|
+|down |u8|downkey|
+|Fire |u8|spacekey|
+|special item |u8|control|
+
+
+
+#### Start screen
+
+
+*labels / buttons*
+|id|Label|posx %|posy %|width %|height %|backgroundColor|fontColor|screenID (1 for all Start Screen Elements)|
+|---|---|---|---|---|---|---|---|---|
+|1|Spaceshooter Game Title|u16|u16|u16|u16|u32|u32|
+|2|Start New Campaign|u16|u16|u16|u16|u32|u32|
+|3|Continue Campaign|u16|u16|u16|u16|u32|u32|
+|4|Options|u16|u16|u16|u16|u32|u32|
+|5|Highscores|u16|u16|u16|u16|u32|u32|
+|6|Quit Game|u16|u16|u16|u16|u32|u32|
+
+
+#### options screen
+
+*labels / buttons*
+|id|Label|posx %|posy %|width %|height %|backgroundColor|fontColor|screenID (1 for all Option Screen Elements)|
+|---|---|---|---|---|---|---|---|---|
+|1|Game Options|u16|u16|u16|u16|u32|u32|
+|2|Resoulution|u16|u16|u16|u16|u32|u32|
+|3|Master Volume|u16|u16|u16|u16|u32|u32|
+|4|Sound Effects|u16|u16|u16|u16|u32|u32|
+|5|Music|u16|u16|u16|u16|u32|u32|
+|6|up/left/right/down|u16|u16|u16|u16|u32|u32|
+|7|fire|u16|u16|u16|u16|u32|u32|
+|8|use special item|u16|u16|u16|u16|u32|u32|
+|9|reset to default|u16|u16|u16|u16|u32|u32|
+|10|apply|u16|u16|u16|u16|u32|u32|
+|11|back|u16|u16|u16|u16|u32|u32|
+
+
 
 ### Main Game Loop
 
