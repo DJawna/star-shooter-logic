@@ -253,7 +253,7 @@ Example: screen ID 1 = Start Screen, ui ElementID 2 = Start New Campaign, only o
 |resX|u16|800|
 |resY|u16|600|
 
-*controls*
+*controls settings*
 |inputname|value|defaultValue|
 |---|---|---|
 |up |u8|upkey|
